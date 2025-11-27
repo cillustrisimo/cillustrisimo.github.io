@@ -1254,7 +1254,7 @@
 }
 
 .home-image img {
-    max-width: 300px;
+    width: 300px;
     height: auto;
     border: var(--border);
     align-items: center;
@@ -1397,6 +1397,18 @@
 }
 
 .ascii-cat-container:hover .ascii-cat-hover {
+    display: block;
+}
+
+/* Hide default sleeping cat on Hover OR when .wake-up class is present */
+.ascii-cat-container:hover .ascii-cat-default,
+.ascii-cat-container.wake-up .ascii-cat-default {
+    display: none;
+}
+
+/* Show awake cat on Hover OR when .wake-up class is present */
+.ascii-cat-container:hover .ascii-cat-hover,
+.ascii-cat-container.wake-up .ascii-cat-hover {
     display: block;
 }
 

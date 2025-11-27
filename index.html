@@ -247,7 +247,25 @@
             
         </main>
     </div>
-    
+    <!-- script for cat wake and sleep on mobile -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const catContainer = document.querySelector('.ascii-cat-container');
+
+            if (catContainer) {
+                catContainer.addEventListener('click', function() {
+                    // add the class to wake the cat up
+                    this.classList.add('wake-up');
+
+                    // remove the class after 1.5 seconds so it goes back to sleep
+                    // 1500 is in ms, so 1.5 secs...
+                    setTimeout(() => {
+                        this.classList.remove('wake-up');
+                    }, 1500);
+                });
+            }
+        });
+    </script>
     <script src="js/cursor.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/interactions.js"></script>
