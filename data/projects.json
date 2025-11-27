@@ -1,0 +1,36 @@
+{
+    "projects": [
+        {
+            "id": "project-1",
+            "year": 2025,
+            "title": "Sublime Symbols (WIP)",
+            "category": "Research",
+            "previewImage": "images/previews/symbol_preview.png",
+            "link": "https://github.com/cillustrisimo/sublime_symbols"
+        },
+        {
+            "id": "project-2",
+            "year": 2025,
+            "title": "Interjust Dynamic Report (WIP)",
+            "category": "Public Interest Tech",
+            "previewImage": "images/previews/interjust_preview.png",
+            "link": "https://github.com/cillustrisimo/interjust_storytelling_draft"
+        },
+        {
+            "id": "project-3",
+            "year": 2025,
+            "title": "Towards a unified framework for social bias in humans and algorithms (WIP)",
+            "category": "Research",
+            "previewImage": "images/previews/paper_preview.png",
+            "link": null
+        },
+        {
+            "id": "project-4",
+            "year": 2025,
+            "title": "Computational Brat Theory",
+            "category": "Research",
+            "previewImage": "images/previews/brat_preview.png",
+            "link": "https://github.com/cillustrisimo/brat_topic_modeling"
+        }
+    ]
+}

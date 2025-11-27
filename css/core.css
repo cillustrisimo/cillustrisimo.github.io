@@ -1,0 +1,846 @@
+/**
+ * ============================================
+ * LAYOUT.CSS
+ * Page structure and containers
+ * ============================================
+ */
+
+/* ============================================
+   BASE LAYOUT
+   ============================================ */
+html, body {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: var(--color-background);
+    color: var(--color-text);
+    cursor: none; /* Custom cursor */
+}
+
+#app,
+.main-container {
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: var(--header-offset);
+    padding-bottom: var(--footer-offset);
+}
+
+/* ============================================
+   CONTENT CONTAINER
+   The main centered content area
+   ============================================ */
+.content-container {
+    width: var(--container-width);
+    display: flex;
+    flex-direction: column;
+    max-width: var(--container-max-width);
+}
+
+@media screen and (max-width: 800px) {
+    .content-container {
+        width: calc(100% - var(--spacing-lg));
+    }
+}
+
+/* ============================================
+   SECTION BASE STYLES
+   Common styles for all sections
+   ============================================ */
+section {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background: var(--color-background);
+}
+
+/* Sections are visible by default now */
+section {
+    opacity: 1;
+    transform: none;
+}
+
+/* ============================================
+   DECORATIVE SECTION SHAPE
+   The roof and chimney
+   ============================================ */
+.section-shape {
+    position: absolute;
+    top: -1px;
+    left: calc(0px - var(--border-width));
+    width: calc(100% + (2 * var(--border-width)));
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.section-shape svg {
+    vertical-align: bottom;
+    width: 100%;
+    height: auto;
+    color: var(--color-primary);
+    stroke-width: var(--border-width);
+    backface-visibility: hidden;
+}
+
+@media screen and (max-width: 800px) {
+    .section-shape svg {
+        stroke-width: calc(var(--border-width) + 1px);
+    }
+}
+
+/* Show shape on first section */
+.header-section .section-shape,
+section:first-of-type .section-shape {
+    opacity: 1;
+}
+
+section:first-of-type .section-shape svg path {
+    fill: var(--color-background) !important;
+}
+
+/* ============================================
+   VIEW CONTAINER
+   Wraps the main content view
+   ============================================ */
+.view {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Last section gets bottom border */
+.view section:last-of-type {
+    border-bottom: var(--border);
+}
+
+/* ============================================
+   GRID LAYOUTS
+   ============================================ */
+.grid {
+    display: grid;
+    gap: var(--spacing-sm);
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media screen and (max-width: 800px) {
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   FLEX LAYOUTS
+   ============================================ */
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+/* ============================================
+   IMAGE GRID
+   For project image galleries
+   ============================================ */
+.image-grid {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+}
+
+.image-grid ul {
+    position: relative;
+}
+
+.image-grid li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.image-grid li:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (orientation: landscape) {
+    .image-grid {
+        min-height: 100vh;
+    }
+}
+
+/* ============================================
+   VISIBILITY UTILITIES
+   ============================================ */
+.hidden {
+    display: none !important;
+}
+
+.invisible {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+/**
+ * ============================================
+ * RESPONSIVE.CSS
+ * Media queries and responsive adjustments
+ * ============================================
+ */
+
+/* ============================================
+   BREAKPOINT REFERENCE
+   
+   Mobile:      < 500px
+   Tablet:      500px - 800px
+   Desktop:     800px - 1090px
+   Large:       1090px - 1400px
+   Extra Large: > 1400px
+   ============================================ */
+
+/* ============================================
+   SMALL MOBILE (< 500px)
+   ============================================ */
+@media screen and (max-width: 500px) {
+    :root {
+        --spacing-sm: 0.75rem;
+        --spacing-lg: 1rem;
+        --header-offset: calc(10rem + 5vmin);
+    }
+    
+    .filter-column,
+    .project-column {
+        padding-left: 0;
+        padding-right: var(--spacing-sm) !important;
+    }
+    
+    /* Hide spacer elements */
+    .space-hide-mobile {
+        display: none !important;
+    }
+}
+
+/* ============================================
+   MOBILE/TABLET (< 670px)
+   ============================================ */
+@media screen and (max-width: 670px) {
+    /* Hide category column */
+    .filter-column.category,
+    .project-column.category {
+        display: none;
+    }
+}
+
+/* ============================================
+   TABLET (< 800px)
+   ============================================ */
+@media screen and (max-width: 800px) {
+    .content-container {
+        width: calc(100% - var(--spacing-lg));
+    }
+    
+    /* Adjust section stroke width */
+    .section-shape svg {
+        stroke-width: calc(var(--border-width) + 1px);
+    }
+    
+    /* Header adjustments */
+    .header-logo {
+        overflow: hidden;
+        min-width: 0;
+        text-overflow: ellipsis;
+        flex-shrink: 1;
+        white-space: nowrap;
+        padding-right: 0;
+    }
+    
+    .logo-subtitle {
+        display: none;
+    }
+    
+    /* Reduce icon spacing */
+    .icon-item {
+        margin-left: var(--spacing-icon);
+    }
+    
+    /* Filter adjustments on tablet range */
+    @media (min-width: 550px) {
+        .filter-section .filter-icons {
+            display: none;
+        }
+    }
+}
+
+/* ============================================
+   SMALL DESKTOP (< 1090px)
+   ============================================ */
+@media screen and (max-width: 1090px) {
+    /* Hide agency column */
+    .filter-column.agency,
+    .project-column.agency {
+        display: none;
+    }
+}
+
+/* ============================================
+   DETAIL VIEW RESPONSIVE
+   ============================================ */
+@media screen and (max-width: 700px) {
+    .view-project .project-content,
+    .view-about .project-content {
+        flex-wrap: wrap;
+    }
+    
+    .view-project .project-content li,
+    .view-about .project-content li {
+        flex-basis: 100% !important;
+    }
+}
+
+/* ============================================
+   DESKTOP ONLY ELEMENTS
+   ============================================ */
+@media screen and (min-width: 700px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+/* ============================================
+   MOBILE ONLY ELEMENTS
+   ============================================ */
+@media screen and (max-width: 699px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
+/* ============================================
+   TOUCH DEVICE ADJUSTMENTS
+   ============================================ */
+@media (hover: none) {
+    /* Disable custom cursor */
+    .cursor {
+        opacity: 0 !important;
+        display: none !important;
+    }
+    
+    /* Ensure normal cursor on interactive elements */
+    a, button, .cursor-interact {
+        cursor: pointer;
+    }
+    
+    /* Disable hover-dependent animations */
+    .project-item.active:hover {
+        transform: none;
+    }
+    
+    .cta-button:hover {
+        animation: none;
+    }
+}
+
+/* ============================================
+   ORIENTATION ADJUSTMENTS
+   ============================================ */
+@media (orientation: portrait) {
+    .type-animation-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .type-word {
+        font-size: var(--font-size-display-mobile);
+    }
+}
+
+@media (orientation: landscape) {
+    .image-grid {
+        min-height: 100vh;
+    }
+}
+
+/* ============================================
+   HIGH DPI / RETINA DISPLAYS
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+    /* Adjust border widths for sharp rendering */
+    :root {
+        --border-width: 1.5px;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    /* Hide interactive elements */
+    .cursor,
+    .type-animation,
+    .laser-container,
+    .cta-container,
+    .messages {
+        display: none !important;
+    }
+    
+    /* Reset colors for print */
+    body {
+        background: white;
+        color: black;
+    }
+    
+    section {
+        border-color: black;
+    }
+    
+    /* Show all content */
+    .filter-column,
+    .project-column {
+        display: block !important;
+    }
+}
+
+/* ============================================
+   REDUCED MOTION PREFERENCE
+   Respect user's motion preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .type-word {
+        opacity: 1;
+        animation: none;
+    }
+    
+    section {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+    
+    .cta-button {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}
+
+/* ============================================
+   DARK MODE (System Preference)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #0e1111;
+    }
+}
+
+
+/**
+ * ============================================
+ * VARIABLES.CSS
+ * CSS Custom Properties / Design Tokens
+ * 
+ * ============================================
+ */
+
+:root {
+    /* ============================================
+       COLOR PALETTE
+       ============================================ */
+    
+    /* Primary accent color - the signature color */
+    --color-primary: #FAF9F5;           /*apparently called seashell white */
+    --color-primary-rgb: 250, 249, 245; /* RGB values for redundancy */
+    
+    /* Background color */
+    --color-background: #0e1111;        /*black-ish, apparently called onyx...*/
+    
+    /* Text on primary background */
+    --color-text: var(--color-primary);
+    
+    /* Faded/disabled opacity */
+    --color-faded: 0.25;
+    
+    /* Selection colors */
+    --color-selection-bg: var(--color-primary);
+    --color-selection-text: #000000;
+    
+    /* Active/hover states */
+    --color-active-bg: var(--color-primary);
+    --color-active-text: #000000;
+    
+    /* ============================================
+       ALTERNATIVE COLOR SCHEMES
+       Uncomment one of these to try different looks
+       ============================================ */
+    
+    /* Neon Pink
+    --color-primary: #FF00FF;
+    --color-primary-rgb: 255, 0, 255;
+    */
+    
+    /* Electric Blue
+    --color-primary: #00D4FF;
+    --color-primary-rgb: 0, 212, 255;
+    */
+    
+    /* Lime Green
+    --color-primary: #CCFF00;
+    --color-primary-rgb: 204, 255, 0;
+    */
+    
+    /* Sunset Orange
+    --color-primary: #FF6B35;
+    --color-primary-rgb: 255, 107, 53;
+    */
+    
+    /* Classic White (minimal)
+    --color-primary: #FFFFFF;
+    --color-primary-rgb: 255, 255, 255;
+    */
+    
+    /* ============================================
+       BORDERS
+       ============================================ */
+    --border-width: 2px;
+    --border-style: solid;
+    --border-color: var(--color-primary);
+    --border: var(--border-width) var(--border-style) var(--border-color);
+    
+    /* ============================================
+       SPACING
+       Consistent spacing scale
+       ============================================ */
+    --spacing-xs: 0.5rem;     /* 8px */
+    --spacing-sm: 1rem;       /* 16px */
+    --spacing-md: 1.5rem;     /* 24px */
+    --spacing-lg: 2rem;       /* 32px */
+    --spacing-xl: 3rem;       /* 48px */
+    --spacing-2xl: 4.5rem;    /* 72px */
+    
+    /* Icon specific spacing */
+    --spacing-icon: 1.5rem;
+    --spacing-icon-double: 3rem;
+    
+    /* ============================================
+       TYPOGRAPHY
+       Font families and sizes
+       ============================================ */
+    
+    /* Primary font - for body text and UI */
+    --font-primary: 'Space Mono', 'SF Mono', 'Monaco', monospace;
+   
+    
+    /* Monospace font - for code or accents */
+    --font-mono: 'Space Mono', 'SF Mono', 'Monaco', monospace;
+    
+    /* Base font size (scales responsively) */
+    --font-size-base: 1rem;
+    --font-size-sm: 0.875rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    
+    /* Display text size (for hero/type animation) */
+    --font-size-display: 8vw;
+    --font-size-display-mobile: 15vw;
+    
+    /* Line height */
+    --line-height: 1.6;
+    
+    /* ============================================
+       LAYOUT
+       Container and section sizing
+       ============================================ */
+    --container-max-width: 1150px;
+    --container-width: 88vw;
+    --container-padding: 2rem;
+    
+    /* Header offset (space from top) */
+    --header-offset: calc(15rem + 10vmin);
+    --footer-offset: 6rem;
+    
+    /* ============================================
+       TRANSITIONS & ANIMATION
+       Timing and easing
+       ============================================ */
+    --transition-fast: 0.165s;
+    --transition-normal: 0.33s;
+    --transition-slow: 0.5s;
+    
+    --ease-out: ease-out;
+    --ease-in: ease-in;
+    --ease-in-out: ease-in-out;
+    
+    /* ============================================
+       Z-INDEX SCALE
+       Layer management
+       ============================================ */
+    --z-background: -1;
+    --z-content: 1;
+    --z-overlay: 10;
+    --z-header: 100;
+    --z-modal: 500;
+    --z-cursor: 999;
+    
+    /* ============================================
+       SHADOWS & EFFECTS
+       Glow and shadow effects
+       ============================================ */
+    --glow-sm: 0 0 5rem 1rem rgba(var(--color-primary-rgb), 0.2);
+    --glow-md: 0 0 10rem 2.25rem rgba(var(--color-primary-rgb), 0.33);
+    --glow-lg: 0 0 10rem 2.25rem rgba(var(--color-primary-rgb), 0.66);
+}
+
+/* ============================================
+   LIGHT MODE ALTERNATIVE
+   ============================================ */
+body.light-mode {
+    --color-background: #FAFAFA;
+    --color-primary: #1A1A1A;
+    --color-primary-rgb: 26, 26, 26;
+    --color-selection-text: #FFFFFF;
+}
+
+
+/**
+ * ============================================
+ * RESET.CSS
+ * CSS Reset / Normalize base styles
+ * ============================================
+ */
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Reset margins and padding */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+/* Body defaults */
+body {
+    line-height: 1;
+}
+
+/* Lists */
+ol, ul, li {
+    list-style: none;
+}
+
+/* Quotes */
+blockquote, q {
+    quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+    content: '';
+    content: none;
+}
+
+/* Tables */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Images */
+img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+}
+
+/* Form elements */
+button, input, label, select, textarea {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: normal;
+    background: none;
+    line-height: 1;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+input:focus {
+    outline: none;
+}
+
+input, textarea {
+    box-sizing: border-box;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+    box-sizing: border-box;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: 13px;
+    height: 13px;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    box-sizing: border-box;
+}
+
+::-webkit-search-decoration {
+    display: none;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    overflow: visible;
+    width: auto;
+    cursor: pointer;
+}
+
+::-webkit-file-upload-button {
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+textarea {
+    vertical-align: top;
+    overflow: auto;
+}
+
+select[multiple] {
+    vertical-align: top;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.two-column-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    min-height: 80vh; /* Ensures it takes up most of the screen */
+}
+
+@media screen and (max-width: 800px) {
+    .two-column-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        text-align: center;
+    }
+}
+
+.hero-image-container {
+    width: 100%;
+    border: 1px solid var(--color-primary);
+    padding: 1rem;
+}
