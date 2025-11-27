@@ -1381,16 +1381,6 @@
 }
 
 /* Default cat visible, hover cat hidden */
-.ascii-cat-default {
-    display: block;
-}
-
-.ascii-cat-hover {
-    display: none;
-    right: 0;
-    bottom: 0; 
-}
-
 /* 1. JAVASCRIPT WAKE TRIGGER (For Mobile Taps). */
 .ascii-cat-container.wake-up .ascii-cat-default {
     display: none;
