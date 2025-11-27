@@ -58,6 +58,40 @@
         .smoke-4 { animation-delay: 2.4s; }
         .smoke-5 { animation-delay: 3.2s; }
         .smoke-6 { animation-delay: 4.0s; }
+
+        /* ============================
+           MOBILE SMOKE
+           ============================ */
+        @media screen and (max-width: 800px) {
+            
+            /* 1. Make characters huge to compensate for SVG shrinking */
+            .ascii-smoke {
+                font-size: 85px; 
+            }
+
+            /* 2. Create a simpler animation for mobile (Vertical Rise Only)*/
+            @keyframes asciiRiseMobile {
+                0% {
+                    transform: translateY(0);
+                    opacity: 0;
+                }
+                15% {
+                    opacity: 1;
+                }
+                100% {
+                    /* Move further up to look like a proper plume */
+                    transform: translateY(-250px); 
+                    opacity: 0; 
+                }
+            }
+
+            /* Apply the mobile animation */
+            .ascii-smoke {
+                animation-name: asciiRiseMobile;
+                /* Remove transform-box which can be buggy on mobile Safari */
+                transform-box: initial; 
+            }
+        }
     </style>
 </head>
 <body>
