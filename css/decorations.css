@@ -1391,25 +1391,24 @@
     bottom: 0; 
 }
 
-/* On hover: hide default, show hover cat - INSTANT switch */
-.ascii-cat-container:hover .ascii-cat-default {
-    display: none;
-}
-
-.ascii-cat-container:hover .ascii-cat-hover {
-    display: block;
-}
-
-/* Hide default sleeping cat on Hover OR when .wake-up class is present */
-.ascii-cat-container:hover .ascii-cat-default,
+/* 1. JAVASCRIPT WAKE TRIGGER (For Mobile Taps). */
 .ascii-cat-container.wake-up .ascii-cat-default {
     display: none;
 }
-
-/* Show awake cat on Hover OR when .wake-up class is present */
-.ascii-cat-container:hover .ascii-cat-hover,
 .ascii-cat-container.wake-up .ascii-cat-hover {
     display: block;
+}
+
+
+/* 2. MOUSE HOVER WAKE (For Desktop Only) */
+@media (hover: hover) and (pointer: fine) {
+    .ascii-cat-container:hover .ascii-cat-default {
+        display: none;
+    }
+
+    .ascii-cat-container:hover .ascii-cat-hover {
+        display: block;
+    }
 }
 
 /* Responsive adjustments */
