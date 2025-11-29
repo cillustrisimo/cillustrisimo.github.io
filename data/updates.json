@@ -2,17 +2,13 @@
     "updates": [
         {
             "date": "11-21-2025",
-            "text": "Jeremy Vale and I have just made award-winning mochiko gochujang tofu",
-            "link": null
+            "text": "Jeremy Vale and I won an award for our mochiko gochujang tofu >:)",
+            "link": "jeremyvale.netlify.app",
+            "linkText": "(Jeremy's website)"
         },
         {
             "date": "11-12-2025",
             "text": "My first paper is now in revise and resubmit!",
-            "link": null
-        },
-        {
-            "date": "08-19-2025",
-            "text": "The inaugral research assistant cohort of the Berkeley Executive Tech Policy Fellows has ended.",
             "link": null
         },
         {
@@ -36,7 +32,7 @@
             "date": "02-08-2025",
             "text": "Had a fun time presenting at my first",
             "link": "https://events.berkeley.edu/events/event/289906-brat-and-its-a-conference-but-its-still-brat",
-            "linkText": "conference."
+            "linkText": "conference"
         },
         {
             "date": "01-21-2025",

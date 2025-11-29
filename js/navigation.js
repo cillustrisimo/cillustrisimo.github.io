@@ -151,14 +151,13 @@ class Navigation {
         
         if (this.mobileMenuToggle) {
             this.mobileMenuToggle.classList.toggle('active', this.isMenuOpen);
+            this.mobileMenuToggle.setAttribute('aria-expanded', this.isMenuOpen);
         }
         
         if (this.headerNav) {
             this.headerNav.classList.toggle('open', this.isMenuOpen);
         }
         
-        // Prevent body scroll when menu is open
-        document.body.classList.toggle('menu-open', this.isMenuOpen);
     }
     
     /**

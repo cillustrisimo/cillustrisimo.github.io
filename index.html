@@ -10,6 +10,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
+    <!-- Favicon - add your favicon.ico to the root folder or update path -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
@@ -88,7 +91,7 @@
             /* Apply the mobile animation */
             .ascii-smoke {
                 animation-name: asciiRiseMobile;
-                /* Remove transform-box which can be buggy on mobile Safari */
+                /* Remove transform-box for mobile to avoid bugs */
                 transform-box: initial; 
             }
         }
@@ -113,7 +116,7 @@
                             <g>
                                 <text x="1025" y="30" class="ascii-smoke smoke-1">#</text>
                                 <text x="1125" y="30" class="ascii-smoke smoke-2">?</text>
-                                <text x="1075" y="30" class="ascii-smoke smoke-3">&</text>
+                                <text x="1075" y="30" class="ascii-smoke smoke-3">&amp;</text>
                                 <text x="1050" y="30" class="ascii-smoke smoke-4">%</text>
                                 <text x="1100" y="30" class="ascii-smoke smoke-5">@</text>
                                 <text x="1000" y="30" class="ascii-smoke smoke-6">+</text>
@@ -133,7 +136,7 @@
                         <div class="header-logo">
                             <a href="#home" class="cursor-interact" data-nav="home">
                                 <span class="logo-name" title="that's me!">Carl G. Illustrisimo</span>
-                                <span class="logo-subtitle" title="this is baybayin. im bisaya so suwat bisaya is a better choice, but there is no font for it.">ᜃᜍ᜔ᜎ᜔ᜁᜎ᜔ᜎᜓᜐ᜔ᜆ᜔ᜍᜒᜐᜒᜋᜓ</span>
+                                <span class="logo-subtitle" title="this is baybayin for my name. traditionally, the script contained no spaces. im bisaya so suwat bisaya is a better choice, but there is no font for it.">ᜃᜁᜓᜎᜓᜁᜎᜓᜎᜓᜁᜓᜆᜓᜁᜑᜁᜑᜋᜓ</span>
                             </a>
                         </div>
                         
@@ -173,9 +176,10 @@
                                    I'm excited about interdisciplinary scholarship, and enjoy work in fields such as
                                    cultural analytics, computational social science, and science technology studies.
                                 </p>
+                                
                             </div>
                             <div class="home-image">
-                                <img src="images/me.png" alt="Carl Illustrisimo holding coffee">
+                                <img src="images/me.webp" alt="Carl Illustrisimo holding coffee">
                             </div>
                         </div>
                         
@@ -197,14 +201,14 @@
                                 <pre class="ascii-cat ascii-cat-default">
      /\_/\
     ( -.- )  zzz
-     > ^ <
+    >  ^  <
     /|   |\
    (_|   |_)
                                 </pre>
                                 <pre class="ascii-cat ascii-cat-hover">
      /\_/\
     ( o.o )  !!!
-     > ^ <
+    >  ^  <
     /|   |\
    (_|   |_)
                                 </pre>
@@ -231,21 +235,26 @@
                             <li class="filter-column category">
                                 <button class="cursor-interact filter-btn" data-sort="category">Type</button>
                             </li>
-                            <li class="filter-column preview-header">
-                                <span>Preview</span>
+                            <li class="filter-column arrow-header">
+                                <span></span>
                             </li>
                         </ul>
                     </div>
                     
                     <div id="projectList">
-                        <!-- Projects loaded dynamically from data/projects.json -->
+                        <!-- Projects loaded from data/projects.json -->
                         <div class="project-item active cursor-interact loading-placeholder">
                             <ul class="project-content">
                                 <li class="project-column year"><p>...</p></li>
                                 <li class="project-column title"><p>Loading projects...</p></li>
                                 <li class="project-column category"><p>...</p></li>
-                                <li class="project-column preview">
-                                    <div class="preview-image"></div>
+                                <li class="project-column arrow">
+                                    <span class="project-arrow">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -281,7 +290,19 @@
             
         </main>
     </div>
-    <!-- script for cat wake and sleep on mobile -->
+
+    <!-- Preview Box for project images, does slideshow effect -->
+    <div id="project-preview-box" class="project-preview-box">
+        <div class="preview-box-inner">
+            <span class="preview-box-label">Preview</span>
+            <div class="preview-box-image">
+                <div class="preview-box-img" id="preview-box-img"></div>
+                <div class="preview-indicators" id="preview-indicators"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script for cat wake and sleep on mobile -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const catContainer = document.querySelector('.ascii-cat-container');
@@ -292,7 +313,6 @@
                     this.classList.add('wake-up');
 
                     // remove the class after 1.5 seconds so it goes back to sleep
-                    // 1500 is in ms, so 1.5 secs...
                     setTimeout(() => {
                         this.classList.remove('wake-up');
                     }, 1500);
@@ -300,12 +320,13 @@
             }
         });
     </script>
+    
+    <!-- Core JavaScript -->
     <script src="js/cursor.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/interactions.js"></script>
-    <script src="js/navigation.js"></script>
     <script src="js/content-loader.js"></script>
+    <script src="js/navigation.js"></script>
     <script src="js/main.js"></script>
-
 </body>
 </html>

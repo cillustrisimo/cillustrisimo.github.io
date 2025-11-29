@@ -5,7 +5,11 @@
             "year": 2025,
             "title": "Sublime Symbols (WIP)",
             "category": "Research",
-            "previewImage": "images/previews/symbol_preview.png",
+            "previewImage":  [
+                    "images/previews/sublime1.webp",
+                    "images/previews/sublime2.webp",
+                    "images/previews/sublime3.webp"
+                    ],
             "link": "https://github.com/cillustrisimo/sublime_symbols"
         },
         {
@@ -13,7 +17,11 @@
             "year": 2025,
             "title": "Interjust Dynamic Report (WIP)",
             "category": "Public Interest Tech",
-            "previewImage": "images/previews/interjust_preview.png",
+            "previewImage": [
+                    "images/previews/interjust1.webp",
+                    "images/previews/interjust2.webp",
+                    "images/previews/interjust3.webp"
+                    ],
             "link": "https://github.com/cillustrisimo/interjust_storytelling_draft"
         },
         {
@@ -21,7 +29,7 @@
             "year": 2025,
             "title": "Towards a unified framework for social bias in humans and algorithms (WIP)",
             "category": "Research",
-            "previewImage": "images/previews/paper_preview.png",
+            "previewImage": "images/previews/paper_preview.webp",
             "link": null
         },
         {
@@ -29,7 +37,11 @@
             "year": 2025,
             "title": "Computational Brat Theory",
             "category": "Research",
-            "previewImage": "images/previews/brat_preview.png",
+            "previewImage": [
+                    "images/previews/brat1.webp",
+                    "images/previews/brat2.webp",
+                    "images/previews/brat3.webp"
+                    ],
             "link": "https://github.com/cillustrisimo/brat_topic_modeling"
         }
     ]
