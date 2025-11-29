@@ -51,6 +51,18 @@ class ContentLoader {
         if (window.imageLoader) {
             window.imageLoader.refresh();
         }
+        
+        // Listen for page changes to preload images when entering projects
+        window.addEventListener('pageChange', (e) => {
+            if (e.detail.page === 'projects') {
+                this.preloadAllPreviewImages();
+            }
+        });
+        
+        // Also preload if already on projects page
+        if (window.location.hash === '#projects') {
+            this.preloadAllPreviewImages();
+        }
     }
     
     /**
@@ -87,7 +99,6 @@ class ContentLoader {
     
     /**
      * Show preview box with image(s)
-     * Images display instantly if preloaded
      * @param {string|string[]} images - Single image URL or array of image URLs
      */
     showPreviewBox(images) {
@@ -100,7 +111,7 @@ class ContentLoader {
         // Clear any existing slideshow
         this.stopSlideshow();
         
-        // Show first image immediately (should be preloaded)
+        // Show first image
         this.updatePreviewImage(true);
         
         // Update indicators
@@ -114,6 +125,37 @@ class ContentLoader {
         if (this.currentImages.length > 1) {
             this.startSlideshow();
         }
+    }
+    
+    /**
+     * Preload ALL preview images immediately
+     * Call this when entering projects page to ensure smooth slideshows
+     */
+    preloadAllPreviewImages() {
+        const allUrls = [];
+        
+        document.querySelectorAll('[data-preview]').forEach(el => {
+            try {
+                const images = JSON.parse(el.dataset.preview);
+                if (Array.isArray(images)) {
+                    allUrls.push(...images);
+                } else {
+                    allUrls.push(images);
+                }
+            } catch (e) {
+                allUrls.push(el.dataset.preview);
+            }
+        });
+        
+        // Preload all unique URLs
+        const uniqueUrls = [...new Set(allUrls)];
+        uniqueUrls.forEach(url => {
+            if (!this.preloadedImages.has(url)) {
+                const img = new Image();
+                img.src = url;
+                this.preloadedImages.add(url);
+            }
+        });
     }
     
     /**
