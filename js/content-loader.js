@@ -2,6 +2,7 @@
  * ============================================
  * CONTENT-LOADER.JS
  * Loads dynamic content from JSON data files
+ * Integrates with ImageLoader for instant image display
  * ============================================
  */
 
@@ -17,8 +18,11 @@ class ContentLoader {
         this.currentImages = [];
         this.currentImageIndex = 0;
         this.slideshowInterval = null;
-        this.slideshowDelay = 2500; // 2.5 seconds per image - comfortable pace
+        this.slideshowDelay = 2500;
         this.isPreviewVisible = false;
+        
+        // Image preload state for smooth transitions
+        this.preloadedImages = new Set();
         
         // Check if device supports hover (desktop)
         this.supportsHover = window.matchMedia('(hover: hover)').matches;
@@ -42,10 +46,48 @@ class ContentLoader {
         if (window.projectList) {
             window.projectList.cacheProjects();
         }
+        
+        // Refresh image loader for new content
+        if (window.imageLoader) {
+            window.imageLoader.refresh();
+        }
+    }
+    
+    /**
+     * Preload images for a set of URLs
+     * Uses ImageLoader if available, falls back to basic preload
+     * @param {string[]} urls - Array of image URLs
+     */
+    async preloadImages(urls) {
+        if (window.imageLoader) {
+            window.imageLoader.addToCache(urls);
+        } else {
+            // Fallback preloading
+            urls.forEach(url => {
+                if (!this.preloadedImages.has(url)) {
+                    const img = new Image();
+                    img.src = url;
+                    this.preloadedImages.add(url);
+                }
+            });
+        }
+    }
+    
+    /**
+     * Check if an image is ready for instant display
+     * @param {string} url - Image URL
+     * @returns {boolean} Whether image is cached
+     */
+    isImageReady(url) {
+        if (window.imageLoader) {
+            return window.imageLoader.isCached(url);
+        }
+        return this.preloadedImages.has(url);
     }
     
     /**
      * Show preview box with image(s)
+     * Images display instantly if preloaded
      * @param {string|string[]} images - Single image URL or array of image URLs
      */
     showPreviewBox(images) {
@@ -58,8 +100,8 @@ class ContentLoader {
         // Clear any existing slideshow
         this.stopSlideshow();
         
-        // Show first image
-        this.updatePreviewImage();
+        // Show first image immediately (should be preloaded)
+        this.updatePreviewImage(true);
         
         // Update indicators
         this.updateIndicators();
@@ -87,21 +129,38 @@ class ContentLoader {
     
     /**
      * Update the preview image display
+     * Skips transition if image is already cached
+     * @param {boolean} instant - Skip fade transition
      */
-    updatePreviewImage() {
+    updatePreviewImage(instant = false) {
         if (!this.previewImg || this.currentImages.length === 0) return;
         
         const imageUrl = this.currentImages[this.currentImageIndex];
+        const isReady = this.isImageReady(imageUrl);
         
-        // Add fade out class
-        this.previewImg.classList.add('transitioning');
-        
-        // After brief fade, change image
-        setTimeout(() => {
+        if (instant || isReady) {
+            // Instant display - no transition needed
             this.previewImg.style.backgroundImage = `url('${imageUrl}')`;
             this.previewImg.classList.remove('transitioning');
+            this.previewImg.classList.add('loaded');
             this.updateIndicatorActive();
-        }, 150);
+        } else {
+            // Add fade transition for uncached images
+            this.previewImg.classList.add('transitioning');
+            
+            // Load the image first
+            const img = new Image();
+            img.onload = () => {
+                this.previewImg.style.backgroundImage = `url('${imageUrl}')`;
+                this.previewImg.classList.remove('transitioning');
+                this.previewImg.classList.add('loaded');
+                this.updateIndicatorActive();
+                
+                // Mark as preloaded
+                this.preloadedImages.add(imageUrl);
+            };
+            img.src = imageUrl;
+        }
     }
     
     /**
@@ -228,6 +287,23 @@ class ContentLoader {
             const response = await fetch('data/projects.json');
             const data = await response.json();
             
+            // Collect all preview images for preloading
+            const previewImages = [];
+            data.projects.forEach(project => {
+                if (project.previewImages && Array.isArray(project.previewImages)) {
+                    previewImages.push(...project.previewImages);
+                } else if (project.previewImage) {
+                    if (Array.isArray(project.previewImage)) {
+                        previewImages.push(...project.previewImage);
+                    } else {
+                        previewImages.push(project.previewImage);
+                    }
+                }
+            });
+            
+            // Start preloading images immediately
+            this.preloadImages(previewImages);
+            
             this.renderProjects(data.projects);
         } catch (error) {
             console.error('Failed to load projects:', error);
@@ -286,10 +362,8 @@ class ContentLoader {
             // Support both previewImage (string) and previewImages (array)
             let previewAttr = '';
             if (project.previewImages && Array.isArray(project.previewImages)) {
-                // Array of images for slideshow
                 previewAttr = `data-preview='${JSON.stringify(project.previewImages)}'`;
             } else if (project.previewImage) {
-                // Single image (legacy support) - store as JSON array for consistency
                 if (Array.isArray(project.previewImage)) {
                     previewAttr = `data-preview='${JSON.stringify(project.previewImage)}'`;
                 } else {
@@ -342,7 +416,6 @@ class ContentLoader {
                         const images = JSON.parse(previewData);
                         this.showPreviewBox(images);
                     } catch (e) {
-                        // Fallback for plain string
                         this.showPreviewBox(previewData);
                     }
                 }
@@ -388,14 +461,23 @@ class ContentLoader {
         projectElement.dataset.category = project.category;
         
         // Handle preview images
+        let previewImages = null;
         if (project.previewImages && Array.isArray(project.previewImages)) {
             projectElement.dataset.preview = JSON.stringify(project.previewImages);
+            previewImages = project.previewImages;
         } else if (project.previewImage) {
             if (Array.isArray(project.previewImage)) {
                 projectElement.dataset.preview = JSON.stringify(project.previewImage);
+                previewImages = project.previewImage;
             } else {
                 projectElement.dataset.preview = JSON.stringify([project.previewImage]);
+                previewImages = [project.previewImage];
             }
+        }
+        
+        // Preload images for this project
+        if (previewImages) {
+            this.preloadImages(previewImages);
         }
         
         if (project.link) {
@@ -421,7 +503,6 @@ class ContentLoader {
         `;
         
         // Add hover listeners if has preview
-        const previewImages = project.previewImages || project.previewImage;
         if (previewImages) {
             projectElement.addEventListener('mouseenter', () => {
                 this.showPreviewBox(previewImages);

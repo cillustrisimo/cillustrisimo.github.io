@@ -10,15 +10,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- Favicon - add your favicon.ico to the root folder or update path -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/favicon.png">
     
+    <!-- Preconnect to external resources for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Preload critical images for instant display -->
+    <link rel="preload" href="images/me.webp" as="image" type="image/webp" fetchpriority="high">
+    
+    <!-- Font loading -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet">
     
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/decorations.css">
+    <link rel="stylesheet" href="css/image-loading.css">
 
     <style>
         /* ASCII Smoke Animation 
@@ -179,7 +187,14 @@
                                 
                             </div>
                             <div class="home-image">
-                                <img src="images/me.webp" alt="Carl Illustrisimo holding coffee">
+                                <!-- Critical image with high priority loading -->
+                                <img 
+                                    src="images/me.webp" 
+                                    alt="Carl Illustrisimo holding coffee"
+                                    fetchpriority="high"
+                                    decoding="async"
+                                    data-critical="true"
+                                >
                             </div>
                         </div>
                         
@@ -321,12 +336,15 @@
         });
     </script>
     
+    <!-- Image loader loads first for instant image display -->
+    <script src="js/image-loader.js"></script>
+    
     <!-- Core JavaScript -->
     <script src="js/cursor.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/interactions.js"></script>
-    <script src="js/content-loader.js"></script>
     <script src="js/navigation.js"></script>
+    <script src="js/content-loader.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

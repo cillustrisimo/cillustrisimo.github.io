@@ -1,0 +1,286 @@
+/**
+ * ============================================
+ * IMAGE-LOADING.CSS
+ * Styles for optimized image loading experience
+ * ============================================
+ */
+
+/* ============================================
+   IMAGE LOADING STATES
+   Smooth transitions for lazy-loaded images
+   ============================================ */
+
+/* Base state for images that will be lazy loaded */
+img[data-src],
+img.lazy {
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    background-color: rgba(var(--color-primary-rgb), 0.05);
+}
+
+/* Loaded state - fade in smoothly */
+img[data-src].loaded,
+img.lazy.loaded,
+img[lazy="loaded"] {
+    opacity: 1;
+    background-color: transparent;
+}
+
+/* Error state */
+img.load-error {
+    opacity: 0.3;
+    filter: grayscale(1);
+}
+
+/* ============================================
+   SKELETON LOADING PLACEHOLDER
+   Animated loading indicator for images
+   ============================================ */
+.image-skeleton {
+    position: relative;
+    background: linear-gradient(
+        90deg,
+        rgba(var(--color-primary-rgb), 0.03) 0%,
+        rgba(var(--color-primary-rgb), 0.08) 50%,
+        rgba(var(--color-primary-rgb), 0.03) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite ease-in-out;
+    overflow: hidden;
+}
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Hide skeleton when image loads */
+.image-skeleton.loaded {
+    background: transparent;
+    animation: none;
+}
+
+/* ============================================
+   PROFILE IMAGE OPTIMIZATION
+   Ensure hero/profile image loads instantly
+   ============================================ */
+.home-image img {
+    /* Ensure smooth appearance */
+    opacity: 1;
+    transition: opacity 0.2s ease-out, transform 0.3s ease-out;
+}
+
+/* Loading state if using lazy loading on profile */
+.home-image img[data-src] {
+    opacity: 0;
+}
+
+.home-image img.loaded,
+.home-image img[lazy="loaded"] {
+    opacity: 1;
+}
+
+/* Subtle scale animation on load */
+.home-image img.loaded {
+    animation: image-reveal 0.4s ease-out;
+}
+
+@keyframes image-reveal {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   PREVIEW BOX IMAGE OPTIMIZATIONS
+   Instant display for preloaded preview images
+   ============================================ */
+.preview-box-img {
+    /* Use GPU acceleration */
+    will-change: opacity, background-image;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    
+    /* Smooth background image transitions */
+    transition: opacity 0.15s ease-out;
+}
+
+/* Instant display when image is cached */
+.preview-box-img.loaded {
+    opacity: 1 !important;
+}
+
+/* Loading transition for uncached images */
+.preview-box-img.transitioning {
+    opacity: 0.3;
+}
+
+/* Subtle loading indicator in preview box */
+.preview-box-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(var(--color-primary-rgb), 0.02) 0%,
+        rgba(var(--color-primary-rgb), 0.05) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Show loading background only when transitioning */
+.preview-box-img.transitioning ~ .preview-box-image::before,
+.project-preview-box:not(.is-visible) .preview-box-image::before {
+    opacity: 1;
+}
+
+/* ============================================
+   IMAGE CONTAINER ASPECT RATIO
+   Prevent layout shift during loading
+   ============================================ */
+.image-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* 16:9 aspect ratio */
+.image-container.ratio-16-9 {
+    aspect-ratio: 16 / 9;
+}
+
+/* 4:3 aspect ratio */
+.image-container.ratio-4-3 {
+    aspect-ratio: 4 / 3;
+}
+
+/* 1:1 square */
+.image-container.ratio-1-1 {
+    aspect-ratio: 1 / 1;
+}
+
+/* Image fills container */
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ============================================
+   BLUR-UP LOADING EFFECT
+   Low-quality placeholder that sharpens
+   ============================================ */
+.blur-up {
+    filter: blur(10px);
+    transition: filter 0.3s ease-out;
+}
+
+.blur-up.loaded {
+    filter: blur(0);
+}
+
+/* ============================================
+   PROGRESSIVE IMAGE LOADING
+   For images with low-res placeholder
+   ============================================ */
+.progressive-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.progressive-image .placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: blur(20px);
+    transform: scale(1.1);
+    transition: opacity 0.3s ease-out;
+}
+
+.progressive-image .full-image {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.progressive-image .full-image.loaded {
+    opacity: 1;
+}
+
+.progressive-image .full-image.loaded ~ .placeholder {
+    opacity: 0;
+}
+
+/* ============================================
+   REDUCE MOTION PREFERENCES
+   Respect user's motion preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    img[data-src],
+    img.lazy,
+    .preview-box-img,
+    .blur-up,
+    .progressive-image .placeholder,
+    .progressive-image .full-image {
+        transition: none;
+    }
+    
+    .image-skeleton {
+        animation: none;
+        background: rgba(var(--color-primary-rgb), 0.05);
+    }
+    
+    .home-image img.loaded {
+        animation: none;
+    }
+}
+
+/* ============================================
+   NATIVE LAZY LOADING SUPPORT
+   Styles for browsers with native lazy loading
+   ============================================ */
+img[loading="lazy"] {
+    /* Ensure smooth transition when loaded */
+    transition: opacity 0.3s ease-out;
+}
+
+/* ============================================
+   HIGH-DPI / RETINA OPTIMIZATION
+   Better rendering on high-DPI displays
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    img {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* ============================================
+   PERFORMANCE HINTS
+   ============================================ */
+.home-image,
+.preview-box-image,
+.image-container {
+    /* Promote to own layer for better performance */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
