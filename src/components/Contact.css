@@ -1,0 +1,133 @@
+.contact {
+  padding: 10rem 4rem 4rem;
+  background: var(--bg-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.contact__heading {
+  font-family: var(--font-heading);
+  font-size: 5.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.contact__sub {
+  display: block;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.contact__terminal {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  line-height: 2.2;
+}
+
+.contact__line {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.contact__line--dim {
+  opacity: 0.4;
+  margin-top: 1.5rem;
+}
+
+.contact__prompt {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}
+
+.contact__text {
+  color: var(--text-primary);
+  opacity: 0.7;
+}
+
+.contact__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+}
+
+.contact__link {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact__link:hover {
+  color: var(--accent-cyan);
+}
+
+.contact__link-label {
+  color: var(--accent-cyan);
+  opacity: 0.5;
+  flex-shrink: 0;
+  width: 100px;
+  font-size: 0.75rem;
+}
+
+.contact__link-value {
+  font-size: 0.95rem;
+}
+
+.contact__coords {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+
+.contact__footer {
+  max-width: 1400px;
+  margin: 8rem auto 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+@media (max-width: 900px) {
+  .contact {
+    padding: 6rem 2rem 3rem;
+  }
+
+  .contact__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact__heading {
+    font-size: 3.5rem;
+  }
+}

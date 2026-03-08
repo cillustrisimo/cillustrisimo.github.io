@@ -1,0 +1,95 @@
+.head-nav {
+  position: relative;
+  height: 110px;
+  width: calc(110px * 211 / 122);
+  flex-shrink: 0;
+}
+
+/* Image + scanline wrapper */
+.head-nav__img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.head-nav__base {
+  width: 100%;
+  height: 100%;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Horizontal scanline overlay on the head image */
+.head-nav__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.35) 2px,
+    rgba(0, 0, 0, 0.35) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+.head-nav__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Label font — matches site mono font */
+.head-nav__label {
+  font-family: 'JetBrains Mono', var(--font-mono), monospace;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+
+/* Nav elements dim by default */
+.head-nav__line,
+.head-nav__box-stroke,
+.head-nav__label {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+/* Box fill hidden by default */
+.head-nav__box-fill {
+  opacity: 0;
+}
+
+/* Hover: brighten that section's elements */
+.head-nav__section:hover .head-nav__line,
+.head-nav__section:hover .head-nav__box-stroke,
+.head-nav__section:hover .head-nav__label {
+  opacity: 1;
+}
+
+/* Active section: elements stay bright */
+.head-nav__section--active .head-nav__line,
+.head-nav__section--active .head-nav__box-stroke,
+.head-nav__section--active .head-nav__label {
+  opacity: 1;
+}
+
+/* Active label: cyan */
+.head-nav__section--active .head-nav__label {
+  fill: var(--accent-cyan);
+}
+
+/* Active box fill: blinking white fill */
+.head-nav__section--active .head-nav__box-fill {
+  animation: box-fill-blink 1.2s step-end infinite;
+}
+
+@keyframes box-fill-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

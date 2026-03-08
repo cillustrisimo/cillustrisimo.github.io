@@ -1,0 +1,44 @@
+{
+    "updates": [
+        {
+            "date": "11-21-2025",
+            "text": "Jeremy Vale and I won an award for our mochiko gochujang tofu >:)",
+            "link": "jeremyvale.netlify.app",
+            "linkText": "(Jeremy's website)"
+        },
+        {
+            "date": "11-12-2025",
+            "text": "My first paper is now in revise and resubmit!",
+            "link": null
+        },
+        {
+            "date": "07-25-2025",
+            "text": "I am now a fellow of the",
+            "link": "https://dlab.berkeley.edu/about/people",
+            "linkText": "D-Lab!"
+        },
+        {
+            "date": "07-14-2025",
+            "text": "My first paper, written with Diag, has been submitted!",
+            "link": null
+        },
+        {
+            "date": "06-09-2025",
+            "text": "I've begun as a Graduate Student Researcher for Charlotte Burrows and Jenny R. Yang in the",
+            "link": "https://www.ischool.berkeley.edu/programs/executive-fellowship",
+            "linkText": "Berkeley Executive Tech Poicy Fellows!"
+        },
+        {
+            "date": "02-08-2025",
+            "text": "Had a fun time presenting at my first",
+            "link": "https://events.berkeley.edu/events/event/289906-brat-and-its-a-conference-but-its-still-brat",
+            "linkText": "conference"
+        },
+        {
+            "date": "01-21-2025",
+            "text": "I've begun research with",
+            "link": "https://diagdavenport.com/",
+            "linkText": "Dr. Diag Davenport!"
+        }
+    ]
+}
