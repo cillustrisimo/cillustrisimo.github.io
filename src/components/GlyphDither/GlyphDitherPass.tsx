@@ -1,7 +1,7 @@
 import { useRef, useMemo, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
-import { createFontAtlas, CHARS } from './fontAtlas'
+import { createFontAtlas } from './fontAtlas'
 
 // Larger cells on mobile for performance
 const CELL_SIZE = window.innerWidth < 768 ? 16 : 10
