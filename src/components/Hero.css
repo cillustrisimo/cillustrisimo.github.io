@@ -41,7 +41,7 @@
 
 .hero__email {
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   letter-spacing: 0.1em;
   color: var(--text-primary);
   opacity: 0.6;
