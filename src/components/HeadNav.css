@@ -1,7 +1,7 @@
 .head-nav {
   position: relative;
-  height: 110px;
-  width: calc(110px * 211 / 122);
+  height: 88px;
+  width: calc(88px * 211 / 122);
   flex-shrink: 0;
 }
 
@@ -48,7 +48,7 @@
 /* Label font — matches site mono font */
 .head-nav__label {
   font-family: 'JetBrains Mono', var(--font-mono), monospace;
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 0.08em;
 }
 
