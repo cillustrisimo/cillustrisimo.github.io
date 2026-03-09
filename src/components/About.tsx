@@ -1,10 +1,8 @@
-import AmbientGlyphField from './AmbientGlyphField'
 import './About.css'
 
 export default function About() {
   return (
     <section className="about" id="about">
-      <AmbientGlyphField />
 
       <div className="about__grid">
         <div className="about__heading-col">
