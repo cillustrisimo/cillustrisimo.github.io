@@ -78,7 +78,7 @@ function MoonPhase({ phase, radius = 0.4, position = [0, 0, 0] }: MoonPhaseProps
 /**
  * Arranges 7 moon phases in a circle.
  */
-export default function MoonPhases({ ringRadius = 1.6 }: { ringRadius?: number }) {
+export default function MoonPhases({ ringRadius = 1.6, moonRadius = 0.4 }: { ringRadius?: number; moonRadius?: number }) {
   const phases = useMemo(() => {
     // 7 phases: new, waxing crescent, first quarter, waxing gibbous, full, waning gibbous, third quarter
     const phaseValues = [0.08, 0.2, 0.3, 0.4, 0.5, 0.65, 0.8]
@@ -93,7 +93,7 @@ export default function MoonPhases({ ringRadius = 1.6 }: { ringRadius?: number }
   return (
     <group>
       {phases.map((p, i) => (
-        <MoonPhase key={i} phase={p.phase} position={p.position} />
+        <MoonPhase key={i} phase={p.phase} position={p.position} radius={moonRadius} />
       ))}
     </group>
   )

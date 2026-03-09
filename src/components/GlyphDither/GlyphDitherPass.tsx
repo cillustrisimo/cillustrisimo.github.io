@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback } from 'react'
+import { useRef, useMemo, useCallback, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { createFontAtlas } from './fontAtlas'
@@ -18,8 +18,9 @@ export default function GlyphDitherPass({
 }: {
   fboTexture: THREE.Texture
 }) {
-  const { viewport, size, pointer } = useThree()
+  const { viewport, size, pointer, gl } = useThree()
   const meshRef = useRef<THREE.InstancedMesh>(null)
+  const mouseActive = useRef(false)
 
   // Grid dimensions in cells
   const cols = Math.ceil(size.width / CELL_SIZE)
@@ -148,6 +149,19 @@ export default function GlyphDitherPass({
     })
   }, [fboTexture, fontAtlas, charCount, cols, rows, size, viewport])
 
+  // Track whether cursor has actually entered the canvas
+  useEffect(() => {
+    const el = gl.domElement
+    const onEnter = () => { mouseActive.current = true }
+    const onLeave = () => { mouseActive.current = false }
+    el.addEventListener('pointerenter', onEnter)
+    el.addEventListener('pointerleave', onLeave)
+    return () => {
+      el.removeEventListener('pointerenter', onEnter)
+      el.removeEventListener('pointerleave', onLeave)
+    }
+  }, [gl])
+
   // Update uniforms when size changes
   const updateUniforms = useCallback(() => {
     if (!material.uniforms) return
@@ -161,12 +175,13 @@ export default function GlyphDitherPass({
     updateUniforms()
     if (!meshRef.current) return
 
-    const mouseX = pointer.x * viewport.width * 0.5
-    const mouseY = pointer.y * viewport.height * 0.5
     const interactionRadius = 1.2
     const intensity = 0.08
-    const momentum = 0.92
-    const friction = 0.08
+    const momentum = 0.82
+    const spring = 0.18
+    const isActive = mouseActive.current
+    const mouseX = isActive ? pointer.x * viewport.width * 0.5 : -9999
+    const mouseY = isActive ? pointer.y * viewport.height * 0.5 : -9999
 
     for (let i = 0; i < count; i++) {
       const col = i % cols
@@ -180,21 +195,31 @@ export default function GlyphDitherPass({
       const dy = worldY + offsets[i * 2 + 1] - mouseY
       const dist = Math.sqrt(dx * dx + dy * dy)
 
-      // Repulsion from cursor
-      if (dist < interactionRadius && dist > 0.001) {
+      // Repulsion from cursor (only when mouse is active)
+      if (isActive && dist < interactionRadius && dist > 0.001) {
         const force = (1.0 - dist / interactionRadius) * intensity
         velocities[i * 2] += (dx / dist) * force
         velocities[i * 2 + 1] += (dy / dist) * force
       }
 
-      // Spring back to origin + friction
+      // Spring back to origin + damping
       velocities[i * 2] *= momentum
       velocities[i * 2 + 1] *= momentum
-      velocities[i * 2] -= offsets[i * 2] * friction
-      velocities[i * 2 + 1] -= offsets[i * 2 + 1] * friction
+      velocities[i * 2] -= offsets[i * 2] * spring
+      velocities[i * 2 + 1] -= offsets[i * 2 + 1] * spring
 
       offsets[i * 2] += velocities[i * 2]
       offsets[i * 2 + 1] += velocities[i * 2 + 1]
+
+      // Deadzone — snap to zero when nearly settled
+      if (Math.abs(offsets[i * 2]) < 0.0005 && Math.abs(velocities[i * 2]) < 0.0005) {
+        offsets[i * 2] = 0
+        velocities[i * 2] = 0
+      }
+      if (Math.abs(offsets[i * 2 + 1]) < 0.0005 && Math.abs(velocities[i * 2 + 1]) < 0.0005) {
+        offsets[i * 2 + 1] = 0
+        velocities[i * 2 + 1] = 0
+      }
     }
 
     offsetAttr.needsUpdate = true
