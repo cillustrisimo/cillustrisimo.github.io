@@ -10,11 +10,11 @@ import GlyphDitherPass from './GlyphDitherPass'
  * 2. Render the glyph dither grid reading from that FBO
  */
 export default function GlyphDitherScene() {
-  const { size, viewport } = useThree()
+  const { size } = useThree()
   const aspect = size.width / size.height
-  // Scale down the moon ring on narrow (portrait) screens
-  const ringRadius = aspect < 1 ? 1.6 * Math.min(1, aspect / 0.75) : 1.6
-  const moonRadius = aspect < 1 ? 0.3 : 0.4
+  // Keep the moon ring full-size (slightly clips on mobile — intentional)
+  const ringRadius = 1.6
+  const moonRadius = aspect < 1 ? 0.35 : 0.4
 
   // Offscreen scene for the moon geometry
   const offscreenScene = useMemo(() => new THREE.Scene(), [])
