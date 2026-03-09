@@ -1,6 +1,5 @@
 :root {
   --bg-primary: #000000;
-  --bg-elevated: #0a0a0a;
   --accent-blue: #0000FF;
   --accent-green: #00FF00;
   --accent-magenta: #FF00FF;
@@ -24,10 +23,13 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body, #root {
+html, body {
   width: 100%;
-  height: 100%;
   overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
 }
 
 body {

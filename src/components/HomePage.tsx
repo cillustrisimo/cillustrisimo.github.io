@@ -1,6 +1,7 @@
 import Nav from './Nav'
 import Hero from './Hero'
 import About from './About'
+import Work from './Work'
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Nav />
       <Hero />
       <About />
+      <Work />
     </>
   )
 }

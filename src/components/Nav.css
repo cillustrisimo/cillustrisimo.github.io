@@ -8,59 +8,10 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding: 0.75rem 2.5rem;
-  transition: background 0.4s, border-color 0.4s;
-  border-bottom: 1px solid transparent;
 }
-
-.nav--scrolled {
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom-color: var(--text-muted);
-}
-
-/* Logo — left side, hidden until past hero */
-.nav__logo {
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.4s, transform 0.4s;
-  pointer-events: none;
-}
-
-.nav__logo--visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.nav__logo button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: block;
-}
-
-.nav__logo-svg {
-  height: 70px;
-  width: auto;
-  display: block;
-  opacity: 0.85;
-  transition: opacity 0.2s;
-}
-
-.nav__logo button:hover .nav__logo-svg {
-  opacity: 1;
-}
-
 
 @media (max-width: 768px) {
   .nav {
     padding: 0.5rem 1.5rem;
   }
-
-  .nav__logo-svg {
-    height: 50px;
-  }
-
 }

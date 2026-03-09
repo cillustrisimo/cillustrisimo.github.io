@@ -10,6 +10,7 @@ const VB_H = 122
 
 const SECTIONS = [
   {
+    // Eye — matches reference box 1
     id: 'hero',
     label: 'HOME',
     box: { x: 36.5, y: 34.5, w: 12, h: 8 },
@@ -21,8 +22,21 @@ const SECTIONS = [
     zone: { x: 30, y: 25, w: 175, h: 28 },
   },
   {
+    // Back of head — matches reference box 2
     id: 'about',
     label: 'ABOUT',
+    box: { x: 68.5, y: 53.5, w: 12, h: 8 },
+    lines: [
+      { x1: 80.5, y1: 57.5, x2: 128, y2: 57.5 },
+      { x1: 127.307, y1: 57.605, x2: 145.307, y2: 71.605 },
+    ],
+    text: { x: 153, y: 77 },
+    zone: { x: 62, y: 49, w: 143, h: 24 },
+  },
+  {
+    // Mouth — matches reference box 3
+    id: 'work',
+    label: 'WORK',
     box: { x: 18.5, y: 74.5, w: 12, h: 8 },
     lines: [
       { x1: 30.006, y1: 78.5, x2: 126.006, y2: 79.5 },

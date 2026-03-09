@@ -151,13 +151,9 @@ export default function GlyphDitherPass({
 
   // Track whether cursor has actually moved over the canvas
   // pointerenter alone isn't enough — it fires on page load if cursor is already over the element
-  const hasMoved = useRef(false)
   useEffect(() => {
     const el = gl.domElement
-    const onMove = () => {
-      if (!hasMoved.current) hasMoved.current = true
-      mouseActive.current = true
-    }
+    const onMove = () => { mouseActive.current = true }
     const onLeave = () => { mouseActive.current = false }
     el.addEventListener('pointermove', onMove)
     el.addEventListener('pointerleave', onLeave)

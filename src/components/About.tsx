@@ -3,7 +3,6 @@ import './About.css'
 export default function About() {
   return (
     <section className="about" id="about">
-
       <div className="about__grid">
         <div className="about__heading-col">
           <h2 className="about__heading">About</h2>
